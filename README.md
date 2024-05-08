@@ -24,12 +24,12 @@ docker run -d --restart always \
 ## via [`docker-compose`](https://github.com/docker/compose)
 
 ```yaml
-version: '3'
+version: "3"
 services:
   npio:
     restart: always
     image: npio
-    container_name: 'npio'
+    container_name: "npio"
     ports:
       - 8080:80
       - 9000:9000
@@ -37,7 +37,15 @@ services:
       - ./html:/var/www/html
 ```
 
+## Known Issues
 
+By default, the `html` directory mounted from the host machine is owned by the current user. It will cause a permission denied problem when you try to execute the `mkdir()` function or other writing operations. If you want to change the permissions, you can use the `chown` command to change the ownership of the `html` directory.
+
+```bash
+docker exec -it npio chown -R www-data:www-data /var/www/html
+```
+
+## 
 
 ## References
 
