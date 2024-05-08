@@ -4,8 +4,9 @@ ADD repositories /etc/apk/repositories
 ADD default.conf index.html run.sh /
 
 RUN apk update && apk add --no-cache nginx && \
-    apk add --no-cache m4 autoconf make gcc g++ linux-headers && \
+    apk add --no-cache bash m4 autoconf make gcc g++ linux-headers && \
     docker-php-ext-install pdo_mysql opcache mysqli && \
+    pecl install redis && docker-php-ext-enable redis && \
     mkdir /run/nginx && \
     mv /default.conf /etc/nginx/conf.d && \
     mv /index.html /var/www/html && \
